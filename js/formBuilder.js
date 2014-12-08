@@ -17,8 +17,9 @@ var FormBuilder = function(){
     this.draggedFields = $(".selectorField");
     this.droppedFields = $(".droppedFields");
     this.ctrl_index = 0 ;
+
     this.makeDraggable();
-    // this.makeDroppable();
+    this.makeDroppable();
     this.makeSortable();
     /* compile templates in array of templates*/
     this.templates = {};
@@ -41,31 +42,75 @@ var FormBuilder = function(){
   },
 
   makeDroppable: function(){
+    var form = this;
     this.droppedFields.droppable({
       activeClass: "activeDroppable",
       hoverClass: "hoverDroppable",
-      accept: ":not(.ui-sortable-helper)",
       drop: function( event, ui ) {
-        var draggable = ui.draggable;       
-        draggable = draggable.clone();
-        console.log(draggable);
-        console.log(this.droppedFields);
-        draggable.removeClass("selectorField");
-        draggable.addClass("droppedField");
-        draggable[0].id = "CTRL-DIV-"+(this.ctrl_index++); // Attach an ID to the rendered control
-        draggable.appendTo(this.droppedFields); 
-        this.makeDraggable();
+        // if it is already dropped before skip this code
+        if (!ui.draggable.hasClass('droppedFields')){
+          draggable = ui.draggable;
+          //add class droppedFields
+          draggable.addClass('droppedFields');
+          // remove class selectorField
+          draggable.removeClass('selectorField');
+          //add id attribute 
+          draggable.attr('id' , "CTRL-DIV-"+(form.ctrl_index++));
+          console.log(ui.draggable);
+          /* Once dropped, attach the customization handler to the control */
+          form.setControlCustomization(draggable);
+          }
       }
-    });   
+    });    
   },
+
   makeSortable: function(){
     this.droppedFields.sortable({
         cancel: null, // Cancel the default events on the controls      
-        items: "div",
         connectWith: ".droppedFields"
-        
     }).disableSelection();
+  },
+
+  setControlCustomization: function(draggable){
+    var form = this;
+
+    draggable.click(function () {
+      var me = $(this)
+      var ctrl = me.find("[class*=ctrl]")[0];
+      var ctrl_type = $.trim(ctrl.className.match("ctrl-.*")[0].split(" ")[0].split("-")[1]);
+      console.log(ctrl_type);
+      form.customizeControl(ctrl_type, this.id);
+
+  });
+  },
+
+  customizeControl: function(ctrl_type, ctrl_id){
+    var ctrl_params = {};
+
+    /* Load the specific templates */
+    var specific_template = templates[ctrl_type];
+    if(typeof(specific_template)=='undefined') {
+      specific_template = function(){return ''; };
+    }
+    var modal_header = $("#"+ctrl_id).find('.control-label').text();
+    
+    var template_params = {
+      header:modal_header, 
+      content: specific_template(ctrl_params), 
+      type: ctrl_type,
+      forCtrl: ctrl_id
+    }
+    
+    // Pass the parameters - along with the specific template content to the Base template
+    var s = templates.common(template_params)+"";
+    
+    
+    $("[name=customization_modal]").remove(); // Making sure that we just have one instance of the modal opened and not leaking
+    $('<div id="customization_modal" name="customization_modal" class="modal hide fade" />').append(s).modal('show');
+    
+
   }
+
   
 }
 

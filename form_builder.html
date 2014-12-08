@@ -97,23 +97,6 @@
 		window.templates.textbox = Handlebars.compile($("#textbox-template").html());
 		window.templates.passwordbox = Handlebars.compile($("#textbox-template").html());
 		window.templates.combobox = Handlebars.compile($("#combobox-template").html());	
-		        $( ".droppedFields" ).droppable({
-        activeClass: "activeDroppable",
-        hoverClass: "hoverDroppable",
-        accept: ":not(.ui-sortable-helper)",
-        drop: function( event, ui ) {
-        //console.log(event, ui);
-        var draggable = ui.draggable;
-        draggable = $(ui.draggable).find(".modele").clone();
-          // draggable = draggable.clone();
-        draggable.removeClass("modele");
-        draggable.removeClass("selectorField");
-        draggable.addClass("droppedField");
-        draggable[0].id = "CTRL-DIV-"+(0); // Attach an ID to the rendered control
-        console.log(draggable);
-        draggable.appendTo(this);
-        } 
-});
 
 	}	
 </script>
@@ -159,7 +142,7 @@
 		<div id="selected-column-2" class="span5 well droppedFields"></div>
 	  </div>
 	  <div class="row-fluid">
-		<div id="selected-action-column" class="span10 well action-bar droppedFields" style="min-height:80px;"></div>
+		<div id="" class="span10 well action-bar droppedFields" style="min-height:80px;"></div>
 	  </div>
 	</div>
 	</div>
