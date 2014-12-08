@@ -38,7 +38,13 @@ var FormBuilder = function(){
   },
   
   makeDraggable: function(){
-    this.draggedFields.draggable({connectToSortable: this.droppedFields, helper: "clone",stack: "div",cursor: "move", cancel: null  });
+    this.draggedFields.draggable({
+        connectToSortable: this.droppedFields, 
+        helper: "clone",
+        stack: "div",
+        cursor: "move",
+        cancel: null  
+      });
   },
 
   makeDroppable: function(){
@@ -61,19 +67,22 @@ var FormBuilder = function(){
           form.setControlCustomization(draggable);
           }
       }
+
     });    
   },
 
   makeSortable: function(){
     this.droppedFields.sortable({
+
         cancel: null, // Cancel the default events on the controls      
-        connectWith: ".droppedFields"
+        connectWith: ".droppedFields",
+        placeholder: "placeholder"
     }).disableSelection();
   },
 
   setControlCustomization: function(draggable){
     var form = this;
-
+    //add on click listner
     draggable.click(function () {
       var me = $(this)
       var ctrl = me.find("[class*=ctrl]")[0];
@@ -107,7 +116,6 @@ var FormBuilder = function(){
     
     $("[name=customization_modal]").remove(); // Making sure that we just have one instance of the modal opened and not leaking
     $('<div id="customization_modal" name="customization_modal" class="modal hide fade" />').append(s).modal('show');
-    
 
   }
 
