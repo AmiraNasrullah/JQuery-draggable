@@ -88,17 +88,17 @@ var FormBuilder = function(){
     var ctrl_params = {};
 
     /* Load the specific templates */
-    var specific_template = templates[ctrl_type];
-    if(typeof(specific_template)=='undefined') {
-      specific_template = function(){return ''; };
+    var ctrl_template = templates[ctrl_type];
+    if(typeof(ctrl_template)=='undefined') {
+      ctrl_template = function(){return ''; };
     }
     var modal_header = $("#"+ctrl_id).find('.control-label').text();
     
     var template_params = {
       header:modal_header, 
-      content: specific_template(ctrl_params), 
+      content: ctrl_template(ctrl_params), 
       type: ctrl_type,
-      forCtrl: ctrl_id
+      id: ctrl_id
     }
     
     // Pass the parameters - along with the specific template content to the Base template
