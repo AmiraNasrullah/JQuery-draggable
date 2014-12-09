@@ -23,6 +23,7 @@ var FormBuilder = function(){
     this.makeSortable();
     /* compile templates in array of templates*/
     this.templates = {};
+
     this.templates.common = Handlebars.compile($("#control-customize-template").html());
     
     /* HTML Templates required for specific implementations mentioned below */
@@ -32,7 +33,6 @@ var FormBuilder = function(){
     this.templates.radiogroup = Handlebars.compile($("#combobox-template").html());
     this.templates.text = Handlebars.compile($("#text-template").html());
     this.templates.date = Handlebars.compile($("#date-template").html());    
-
   },
   
   makeDraggable: function(){
@@ -118,7 +118,8 @@ var FormBuilder = function(){
     setTimeout(function() {
       // For some error in the code  modal show event is not firing - applying a manual delay before load
       //load values of a custom control
-      //set delete action
+      form.load_values(ctrl_type, ctrl_id);
+      // set delete action
       $('.btn-danger').on('click',function() {
         form.deleteCtrl();
        });
@@ -135,7 +136,17 @@ var FormBuilder = function(){
         console.log(ctrl_id);
         $("#"+ctrl_id).remove();
       }
-  }
+  },
+    /* Common method for all controls with Label and Name */
+  load_values: function(ctrl_type, ctrl_id) {
+    var form = $("#theForm");
+    var div_ctrl = $("#"+ctrl_id);
+    
+    form.find("[name=label]").val(div_ctrl.find('.control-label').text())
+    //call load method of specific control 
+  },
+
+
 
 
   
