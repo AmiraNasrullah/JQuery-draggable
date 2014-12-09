@@ -26,8 +26,8 @@ var FormBuilder = function(){
     this.templates.common = Handlebars.compile($("#control-customize-template").html());
     
     /* HTML Templates required for specific implementations mentioned below */
-    this.templates.textbox = Handlebars.compile($("#textbox-template").html());
-    this.templates.passwordbox = Handlebars.compile($("#textbox-template").html());
+    this.templates.namebox = Handlebars.compile($("#textbox-template").html());
+    this.templates.emailbox = Handlebars.compile($("#textbox-template").html());
     this.templates.combobox = Handlebars.compile($("#combobox-template").html());
     this.templates.selectmultiplelist = Handlebars.compile($("#combobox-template").html());
     this.templates.radiogroup = Handlebars.compile($("#combobox-template").html());
@@ -95,29 +95,50 @@ var FormBuilder = function(){
 
   customizeControl: function(ctrl_type, ctrl_id){
     var ctrl_params = {};
-
+    var form = this;
     /* Load the specific templates */
-    var ctrl_template = templates[ctrl_type];
+    var ctrl_template = this.templates[ctrl_type];
     if(typeof(ctrl_template)=='undefined') {
       ctrl_template = function(){return ''; };
     }
     var modal_header = $("#"+ctrl_id).find('.control-label').text();
-    
     var template_params = {
       header:modal_header, 
       content: ctrl_template(ctrl_params), 
       type: ctrl_type,
       id: ctrl_id
     }
-    
+ 
     // Pass the parameters - along with the specific template content to the Base template
-    var s = templates.common(template_params)+"";
+    var s = this.templates.common(template_params)+"";
     
-    
+    // console.log(s);
     $("[name=customization_modal]").remove(); // Making sure that we just have one instance of the modal opened and not leaking
-    $('<div id="customization_modal" name="customization_modal" class="modal hide fade" />').append(s).modal('show');
 
+    $('<div id="customization_modal" name="customization_modal" class="modal hide fade" />').append(s).modal('show');// Hide modal if "Go back" is pressed
+   
+    setTimeout(function() {
+      // For some error in the code  modal show event is not firing - applying a manual delay before load
+      //load values of a custom control
+      //set delete action
+      $('.btn-danger').on('click',function() {
+        form.deleteCtrl();
+       });
+      //set create action
+      $('.btn-primary').on('click', function(){
+
+      });
+    },300);
+
+  },
+    deleteCtrl: function() {
+      if(window.confirm("Are you sure about this?")) {
+        var ctrl_id = $("#theForm").find("[name=id]").val()
+        console.log(ctrl_id);
+        $("#"+ctrl_id).remove();
+      }
   }
+
 
   
 }

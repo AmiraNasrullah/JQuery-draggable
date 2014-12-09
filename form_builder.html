@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link rel="stylesheet" href="jqueryui/themes/base/jquery-ui.css" />
+	<link rel="stylesheet" href="jqueryui/themes/base/jquery-ui.min.css" />
 	
 	<title>
 		Draggable and sortable
@@ -20,7 +20,7 @@
 			background-color: lightgreen;
 		}
 		.placeholder {
-		    background-color: green;
+		    background-color: AliceBlue ;
 		    height: 50px;
 		}		
 		.draggableField {
@@ -43,7 +43,7 @@
 	<style id="content-styles">
 		/* Styles that are also copied for Preview */
 		body {
-			margin: 10px 0 0 10px;
+			margin: 50px 0 0 10px;
 		}
 		
 		.control-label {
@@ -69,16 +69,28 @@
 			float: left;
 			padding-left:5px;
 		}
+	    .selectorField .displaydate b {
+	      background-position: -10px -975px;
+	    }
+	    
+	    .well-mini {
+	      margin: 4px;
+	      padding: 2px;
+	      border-radius: 6px;
+	      width: 160px;
+	      cursor: pointer;
+	    }
+
 
 	</style>
 <script type="text/javascript" src="bootstrap/js/jquery.js"></script>	
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap-modal.min.js"></script>
 
 
-<script type="text/javascript" src="jqueryui/ui/minified/jquery-ui.min.js"></script>
+<script type="text/javascript" src="jqueryui/jquery-ui.min.js"></script>
 
 <!-- using handlebars for templating, but DustJS might be better for the current purpose -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
+<script type="text/javascript" src="handlebars/handlebars.js"></script>
 
 <script src="js/formBuilder.js" type="text/javascript"></script>
 
@@ -88,21 +100,6 @@
    });
 </script>  
 
-<script>
-
-	function docReady() {
-
-		window.templates = {};
-		window.templates.common = Handlebars.compile($("#control-customize-template").html());
-		
-		/* HTML Templates required for specific implementations mentioned below */
-				
-		window.templates.textbox = Handlebars.compile($("#textbox-template").html());
-		window.templates.passwordbox = Handlebars.compile($("#textbox-template").html());
-		window.templates.combobox = Handlebars.compile($("#combobox-template").html());	
-
-	}	
-</script>
 </head>
 <body>
 
@@ -114,13 +111,15 @@
 	<div id="listOfFields" class="span3 well tab-content">
 	  <div class="tab-pane active" id="simple">
 		<div class='selectorField draggableField'>
-			<label class="control-label">Text Input</label>
-			<input type="text" placeholder="Text here..." class="ctrl-textbox"></input>
+			<label class="control-label">Name</label>
+			<input type="text" placeholder="Name here..." class="ctrl-namebox"></input>
 		</div>
+
 		<div class='selectorField draggableField'>
-			<label class="control-label">Password</label>
-			<input type="password" placeholder="Password..." class="ctrl-passwordbox"></input>
+			<label class="control-label">Email</label>
+			<input type="email" placeholder="Email Here..." class="ctrl-emailbox"></input>
 		</div>
+
 		<div class='selectorField draggableField'>
 			<label class="control-label">Combobox</label>
 			<select class="ctrl-combobox">
@@ -129,6 +128,15 @@
 				<option value="option3">Option 3</option>
 			</select>
 		</div>
+
+ 		<div class='selectorField draggableField'>
+          <div class="displaydate well well-mini"><b></b> Date</div>
+          <div class='modele'>
+            <label class="control-label">Date</label>
+            <span class="ctrl-date">{DD/MM/YYYY}</span>
+          </div>
+        </div>
+
 	  </div>
 	  
     </div>
@@ -165,9 +173,9 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-primary" data-dismiss="modal" onclick='save_customize_changes()'>Save changes</button>
+		<button class="btn btn-primary" data-dismiss="modal">Save changes</button>
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-		<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true" onclick='delete_ctrl()'>Delete</button>
+		<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true" >Delete</button>
 	</div>
 </script>
 
@@ -194,11 +202,6 @@
 </script>
 
 <!-- End of templates -->
-
-
-<script>
-	$(document).ready(docReady); 
-</script>
 
 </body>
 </html>
