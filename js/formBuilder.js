@@ -29,9 +29,7 @@ var FormBuilder = function(){
     this.templates.namebox = Handlebars.compile($("#textbox-template").html());
     this.templates.emailbox = Handlebars.compile($("#textbox-template").html());
     this.templates.combobox = Handlebars.compile($("#combobox-template").html());
-    this.templates.selectmultiplelist = Handlebars.compile($("#combobox-template").html());
     this.templates.radiogroup = Handlebars.compile($("#combobox-template").html());
-    this.templates.checkboxgroup = Handlebars.compile($("#combobox-template").html());
     this.templates.text = Handlebars.compile($("#text-template").html());
     this.templates.date = Handlebars.compile($("#date-template").html());    
 

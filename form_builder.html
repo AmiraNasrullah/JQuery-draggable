@@ -20,6 +20,8 @@
 			background-color: lightgreen;
 		}
 		.placeholder {
+		    border-style: dashed;
+    		border-width: 1px;
 		    background-color: AliceBlue ;
 		    height: 50px;
 		}		
@@ -121,7 +123,7 @@
 		</div>
 
 		<div class='selectorField draggableField'>
-			<label class="control-label">Combobox</label>
+			<label class="control-label">Dropdown menu</label>
 			<select class="ctrl-combobox">
 				<option value="option1">Option 1</option>
 				<option value="option2">Option 2</option>
@@ -129,12 +131,25 @@
 			</select>
 		</div>
 
+        <div class='selectorField draggableField'>
+            <label class="control-label" style="vertical-align:top">Tic Box</label>
+            <div style="display:inline-block;" class="ctrl-radiogroup">
+              <span style="display:block;"><input type="radio" name="radioField" value="option1"/>Option 1</span>
+              <span style="display:block;"><input type="radio" name="radioField" value="option2"/>Option 2</span>
+              <span style="display:block;"><input type="radio" name="radioField" value="option3"/>Option 3</span>
+            </div>
+            <input type="hidden" class="hiddenObligatoire"/>
+        </div>
+
  		<div class='selectorField draggableField'>
-          <div class="displaydate well well-mini"><b></b> Date</div>
-          <div class='modele'>
+            <label class="control-label">Simple Text</label>
+            <input type="text" placeholder="Type text here..." class="ctrl-textbox"/>
+            <input type="hidden" class="hiddenObligatoire"/>
+        </div>
+
+ 		<div class='selectorField draggableField displaydate well well-mini'>
             <label class="control-label">Date</label>
             <span class="ctrl-date">{DD/MM/YYYY}</span>
-          </div>
         </div>
 
 	  </div>
@@ -192,6 +207,16 @@
 </script>
 
 <script id="date-template" type="text/x-handlebars-template">
+  <p>
+    <label class="control-label" for="handlebars-textbox-formatdate" style="padding-top:16px;">Format</label>
+    <select name="dateformat" id="handlebars-textbox-formatdate">
+      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+      <option value="DD/MM/YYYY hh:mm:ss">DD/MM/YYYY hh:mm:ss</option>
+    </select>    
+  </p>
+</script>
+
+<script id="dropDown-template" type="text/x-handlebars-template">
   <p>
     <label class="control-label" for="handlebars-textbox-formatdate" style="padding-top:16px;">Format</label>
     <select name="dateformat" id="handlebars-textbox-formatdate">
